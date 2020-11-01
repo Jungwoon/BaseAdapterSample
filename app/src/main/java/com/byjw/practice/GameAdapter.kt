@@ -1,24 +1,19 @@
 package com.byjw.practice
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import com.byjw.practice.base.BaseRecyclerViewAdapter
+import com.byjw.practice.databinding.ItemGameBinding
 
-class GameAdapter(private val items: List<GameData>) : RecyclerView.Adapter<GameViewHolder>() {
+class GameAdapter(items: List<GameData>) : BaseRecyclerViewAdapter<GameData, ItemGameBinding>(items) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
-        return GameViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_game,
-                parent,
-                false
-            )
-        )
+    @LayoutRes
+    override fun getLayoutResId() = R.layout.item_game
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        this.BaseViewHolder(holder.itemView).apply {
+            this.binding?.item = items[position]
+        }
     }
 
-    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount() = items.size
 }
